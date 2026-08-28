@@ -34,7 +34,11 @@ export const App = () => {
               </ProtectedRoute>
             }
           />
+
           <Route path="tasks/:id" element={<TaskDetailsPage />} />
+
+          <Route path="submissions" element={<SubmissionListPage />} />
+
           <Route
               path="reviews"
               element={
