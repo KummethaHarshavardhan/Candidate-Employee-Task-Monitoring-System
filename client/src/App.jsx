@@ -4,6 +4,7 @@ import { CandidateDetailsPage } from './pages/candidates/CandidateDetailsPage';
 import { TaskListPage } from './pages/tasks/TaskListPage';
 import { TaskListPage } from './pages/tasks/TaskListPage';   
 import { CreateTaskPage } from './pages/tasks/CreateTaskPage'; 
+import { ReviewQueuePage } from './pages/reviews/ReviewQueuePage';
 
 export const App = () => {
   return (
@@ -34,6 +35,14 @@ export const App = () => {
             }
           />
           <Route path="tasks/:id" element={<TaskDetailsPage />} />
+          <Route
+              path="reviews"
+              element={
+                <ProtectedRoute allowedRoles={['ADMIN', 'REVIEWER']}>
+                  <ReviewQueuePage />
+                </ProtectedRoute>
+              }
+            />
         </Routes>
       </ToastProvider>
     </AuthProvider>
