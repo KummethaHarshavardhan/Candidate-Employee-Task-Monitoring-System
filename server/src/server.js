@@ -6,7 +6,7 @@ const candidateRoutes = require('./routes/candidateRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const assignmentRoutes = require('./routes/assignmentRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
-
+const submissionRoutes = require('./routes/submissionRoutes');
 dotenv.config();
 
 connectDB().then(() => {
@@ -23,6 +23,7 @@ app.use('/api/candidates', candidateRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/assignments', assignmentRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/submissions', submissionRoutes);
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () => {
