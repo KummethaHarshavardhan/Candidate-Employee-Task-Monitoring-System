@@ -5,6 +5,9 @@ import { TaskListPage } from './pages/tasks/TaskListPage';
 import { TaskListPage } from './pages/tasks/TaskListPage';   
 import { CreateTaskPage } from './pages/tasks/CreateTaskPage'; 
 import { ReviewQueuePage } from './pages/reviews/ReviewQueuePage';
+import { CandidateProgressPage } from './pages/progress/CandidateProgressPage';
+import { TeamProgressPage } from './pages/progress/TeamProgressPage';
+import { SubmissionListPage } from './pages/submissions/SubmissionListPage';
 
 export const App = () => {
   return (
@@ -37,6 +40,7 @@ export const App = () => {
 
           <Route path="tasks/:id" element={<TaskDetailsPage />} />
 
+
           <Route path="submissions" element={<SubmissionListPage />} />
 
           <Route
@@ -47,6 +51,9 @@ export const App = () => {
                 </ProtectedRoute>
               }
             />
+            
+          <Route path="reports/candidates" element={<CandidateReportsPage />} />
+          <Route path="reports/teams" element={<TeamReportsPage />} />
         </Routes>
       </ToastProvider>
     </AuthProvider>
