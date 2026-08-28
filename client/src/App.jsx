@@ -2,6 +2,8 @@ import React from 'react';
 import { CandidateListPage } from './pages/candidates/CandidateListPage';
 import { CandidateDetailsPage } from './pages/candidates/CandidateDetailsPage';
 import { TaskListPage } from './pages/tasks/TaskListPage';
+import { TaskListPage } from './pages/tasks/TaskListPage';   
+import { CreateTaskPage } from './pages/tasks/CreateTaskPage'; 
 
 export const App = () => {
   return (
@@ -18,6 +20,8 @@ export const App = () => {
             }
           />
           <Route path="candidates/:id" element={<CandidateDetailsPage />} />
+
+          
 
           {/* Task Allocation Module */}
           <Route path="tasks" element={<TaskListPage />} />
