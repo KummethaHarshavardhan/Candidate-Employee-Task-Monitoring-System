@@ -39,7 +39,7 @@ async function runTests() {
 
   // 2. Provision Isolated Test Admin via initial login or bootstrap
   console.log('\n2. Testing Authentication & Isolated User Setup...');
-  
+
   // First attempt login with environment admin or create initial user
   let adminLogin = await api('/auth/login', {
     method: 'POST',
@@ -83,6 +83,67 @@ async function runTests() {
   reviewerToken = reviewerLogin.data.data.token;
   assert.strictEqual(reviewerLogin.data.data.user.role, 'REVIEWER');
   console.log('   ✓ Reviewer authenticated with dedicated JWT token');
+
+  // 4. Candidate A Registration & Empty State Verification
+  console.log('\n4. Testing Candidate A Registration & Initial Empty State Verification...');
+
+  // Test role tampering: client tries sending role: 'ADMIN' -> backend must enforce CANDIDATE
+  const registerTamperRes = await api('/auth/register', {
+    method: 'POST',
+    body: JSON.stringify({
+      name: `Candidate A ${testSuffix}`,
+      email: testCandidateEmail,
+      password: testPassword,
+      phone: '+1 555-0987',
+      department: 'Platform Engineering',
+      designation: 'Software Engineer',
+      team: `Team Alpha ${testSuffix}`,
+      role: 'ADMIN', // Malicious attempt to register as Admin
+    }),
+  });
+  assert.strictEqual(registerTamperRes.status, 201);
+  assert.strictEqual(registerTamperRes.data.data.user.role, 'CANDIDATE', 'Backend MUST force role to CANDIDATE');
+  testCandidateId = registerTamperRes.data.data.user.candidateId;
+  candidateToken = registerTamperRes.data.data.token;
+  console.log(`   ✓ Candidate A registered: ${testCandidateEmail} (Role strictly enforced: CANDIDATE)`);
+
+  // Verify Candidate A initial empty state (0 tasks, 0 assignments, 0 submissions)
+  const candAInitialOverview = await api('/reports/overview', { token: candidateToken });
+  assert.strictEqual(candAInitialOverview.status, 200);
+  assert.strictEqual(candAInitialOverview.data.data.kpi.totalTasks, 0, 'New candidate must see 0 total tasks');
+  assert.strictEqual(candAInitialOverview.data.data.kpi.completedTasks, 0);
+  assert.strictEqual(candAInitialOverview.data.data.kpi.pendingTasks, 0);
+  assert.strictEqual(candAInitialOverview.data.data.kpi.inProgressTasks, 0);
+  assert.strictEqual(candAInitialOverview.data.data.kpi.submittedTasks, 0);
+  assert.strictEqual(candAInitialOverview.data.data.kpi.completionRate, 0);
+
+  const candAInitialAssignments = await api('/assignments', { token: candidateToken });
+  assert.strictEqual(candAInitialAssignments.status, 200);
+  assert.strictEqual(candAInitialAssignments.data.data.assignments.length, 0, 'New candidate must have 0 assignments');
+
+  const candAInitialSubmissions = await api('/submissions', { token: candidateToken });
+  assert.strictEqual(candAInitialSubmissions.status, 200);
+  assert.strictEqual(candAInitialSubmissions.data.data.submissions.length, 0, 'New candidate must have 0 submissions');
+  console.log('   ✓ Candidate A empty state verified: 0 tasks, 0 assignments, 0 submissions');
+
+  // Register Candidate B for Multi-User Isolation Testing
+  console.log('\n4b. Testing Candidate B Registration & Data Isolation...');
+  const testCandidateBEmail = `test_candidate_b_${testSuffix}@test.local`;
+  const registerBRes = await api('/auth/register', {
+    method: 'POST',
+    body: JSON.stringify({
+      name: `Candidate B ${testSuffix}`,
+      email: testCandidateBEmail,
+      password: testPassword,
+      department: 'Platform Engineering',
+      designation: 'QA Engineer',
+      team: `Team Beta ${testSuffix}`,
+    }),
+  });
+  assert.strictEqual(registerBRes.status, 201);
+  const candidateBToken = registerBRes.data.data.token;
+  const testCandidateBId = registerBRes.data.data.user.candidateId;
+  console.log(`   ✓ Candidate B registered: ${testCandidateBEmail}`);
 
   // 5. Create Task and Allocate to Candidate A ONLY
   console.log('\n5. Testing Task Creation & Candidate Allocation (Team 1)...');
