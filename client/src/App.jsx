@@ -8,6 +8,7 @@ import { ReviewQueuePage } from './pages/reviews/ReviewQueuePage';
 import { CandidateProgressPage } from './pages/progress/CandidateProgressPage';
 import { TeamProgressPage } from './pages/progress/TeamProgressPage';
 import { SubmissionListPage } from './pages/submissions/SubmissionListPage';
+import { ProgressDashboardPage } from './pages/progress/ProgressDashboardPage';
 
 export const App = () => {
   return (
@@ -52,6 +53,7 @@ export const App = () => {
               }
             />
             
+          <Route path="progress" element={<ProgressDashboardPage />} />  
           <Route path="reports/candidates" element={<CandidateReportsPage />} />
           <Route path="reports/teams" element={<TeamReportsPage />} />
         </Routes>
