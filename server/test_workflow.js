@@ -39,7 +39,7 @@ async function runTests() {
 
   // 2. Provision Isolated Test Admin via initial login or bootstrap
   console.log('\n2. Testing Authentication & Isolated User Setup...');
-
+  
   // First attempt login with environment admin or create initial user
   let adminLogin = await api('/auth/login', {
     method: 'POST',
@@ -86,7 +86,7 @@ async function runTests() {
 
   // 4. Candidate A Registration & Empty State Verification
   console.log('\n4. Testing Candidate A Registration & Initial Empty State Verification...');
-
+  
   // Test role tampering: client tries sending role: 'ADMIN' -> backend must enforce CANDIDATE
   const registerTamperRes = await api('/auth/register', {
     method: 'POST',
@@ -262,6 +262,100 @@ async function runTests() {
   assert.strictEqual(reworkRes.status, 200);
   assert.strictEqual(reworkRes.data.data.assignmentStatus, 'REWORK_REQUIRED');
   console.log('   ✓ Rework loop verified: Task status transitioned to REWORK_REQUIRED');
+
+  // 10. Candidate Resubmits Revision (Version 2)
+  console.log('\n10. Testing Candidate Resubmission (Version 2) (Team 3)...');
+  const submit2Res = await api('/submissions', {
+    method: 'POST',
+    token: candidateToken,
+    body: JSON.stringify({
+      taskAssignmentId: testAssignmentId,
+      submissionText: 'Added automated exception handling and 100% test coverage.',
+      attachmentUrl: 'https://github.com/company/repo-test-v2',
+    }),
+  });
+  assert.strictEqual(submit2Res.status, 201);
+  const sub2 = submit2Res.data.data.submission;
+  assert.strictEqual(sub2.version, 2);
+  assert.strictEqual(sub2.status, 'SUBMITTED');
+  console.log('   ✓ Submission v2 created. Previous v1 preserved in audit trail.');
+
+  // 11. Reviewer Approves Submission
+  console.log('\n11. Testing Review Decision: Approval (Team 3)...');
+  const approveRes = await api(`/reviews/${sub2._id}/approve`, {
+    method: 'POST',
+    token: reviewerToken,
+    body: JSON.stringify({
+      comments: 'All test requirements and exception handling verified. Approved!',
+    }),
+  });
+  assert.strictEqual(approveRes.status, 200);
+  assert.strictEqual(approveRes.data.data.assignmentStatus, 'COMPLETED');
+  console.log('   ✓ Approval verified: Task status transitioned to COMPLETED');
+
+  // 12. Verify Audit Trail and Preserved Version History
+  console.log('\n12. Verifying Full Task Audit Trail & Submissions History...');
+  const assignmentDetailRes = await api(`/assignments/${testAssignmentId}`, {
+    token: adminToken,
+  });
+  assert.strictEqual(assignmentDetailRes.status, 200);
+  const finalAssignment = assignmentDetailRes.data.data.assignment;
+  assert.strictEqual(finalAssignment.status, 'COMPLETED');
+  assert.strictEqual(finalAssignment.progressPercentage, 100);
+  assert.strictEqual(finalAssignment.submissions.length, 2);
+  assert.strictEqual(finalAssignment.reviews.length, 2);
+  console.log('   ✓ Audit trail intact: 2 versioned submissions, 2 review records preserved');
+
+  // 13. Dynamic Overdue Calculation Test
+  console.log('\n13. Testing Dynamic Overdue Calculation...');
+  const pastDeadline = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString();
+  const overdueTaskRes = await api('/tasks', {
+    method: 'POST',
+    token: adminToken,
+    body: JSON.stringify({
+      title: `Overdue Test Task ${testSuffix}`,
+      description: 'Test overdue condition calculation.',
+      priority: 'URGENT',
+      candidateId: testCandidateId,
+      deadline: pastDeadline,
+    }),
+  });
+  assert.strictEqual(overdueTaskRes.status, 201);
+  const overdueAssignment = overdueTaskRes.data.data.assignment;
+  assert.strictEqual(overdueAssignment.isOverdue, true);
+  assert.strictEqual(overdueAssignment.deadlineCategory, 'OVERDUE');
+  console.log('   ✓ Dynamic overdue calculation accurate: past deadline + !COMPLETED -> isOverdue = true');
+
+  // 14. Reports and Performance Metrics (Team 4)
+  console.log('\n14. Testing Dynamic Reports & Zero-Division Safety (Team 4)...');
+  const overviewRes = await api('/reports/overview', { token: adminToken });
+  assert.strictEqual(overviewRes.status, 200);
+  const kpi = overviewRes.data.data.kpi;
+  assert.ok(typeof kpi.completionRate === 'number' && !isNaN(kpi.completionRate));
+  assert.ok(typeof kpi.onTimeRate === 'number' && !isNaN(kpi.onTimeRate));
+  console.log(`   ✓ Overview report verified: Completion Rate ${kpi.completionRate}%, On-Time Rate ${kpi.onTimeRate}%`);
+
+  const candReportsRes = await api('/reports/candidates', { token: adminToken });
+  assert.strictEqual(candReportsRes.status, 200);
+  console.log(`   ✓ Candidate performance reports verified`);
+
+  const teamReportsRes = await api('/reports/teams', { token: adminToken });
+  assert.strictEqual(teamReportsRes.status, 200);
+  console.log(`   ✓ Team performance reports verified`);
+
+  const taskReportsRes = await api('/reports/tasks', { token: adminToken });
+  assert.strictEqual(taskReportsRes.status, 200);
+  console.log(`   ✓ Task-wise detailed audit report verified`);
+
+  // 15. Clean up isolated test candidate and task
+  console.log('\n15. Cleaning Up Isolated Test Entities...');
+  await api(`/candidates/${testCandidateId}`, { method: 'DELETE', token: adminToken });
+  await api(`/candidates/${testCandidateBId}`, { method: 'DELETE', token: adminToken });
+  console.log('   ✓ Test candidate A and B records cleaned up successfully');
+
+  console.log('\n====================================================');
+  console.log('ISOLATED AUTOMATED WORKFLOW TEST PASSED (100% SUCCESS)');
+  console.log('====================================================');
 }
 
 runTests().catch((err) => {
