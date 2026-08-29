@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 100" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="cyanGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="100%" stop-color="#00b4d8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left T Icon -->
+  <g id="spaxios-t-icon">
+    <!-- Top Bar of T -->
+    <rect x="8" y="12" width="76" height="15" rx="3" fill="#173887" />
+    <!-- Center Dot with ring -->
+    <circle cx="46" cy="19.5" r="7" fill="#0f172a" stroke="#173887" stroke-width="2" />
+    <!-- Vertical Outer Stem of T -->
+    <rect x="36" y="27" width="20" height="58" rx="3" fill="#173887" />
+    <!-- Inner Cyan Bar inside T -->
+    <rect x="41" y="32" width="10" height="48" rx="2" fill="url(#cyanGlow)" />
+  </g>
+
+  <!-- Right Text Area: SPAXIOS INNOVATION -->
+  <g id="spaxios-text">
+    <!-- SPAXIOS (Upper Row) -->
+    <text x="94" y="48" font-family="Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="42" font-weight="900" letter-spacing="-0.5px">
+      <tspan fill="#1e40af">SPAX</tspan>
+      <tspan fill="url(#cyanGlow)">I</tspan>
+      <tspan fill="#1e40af">OS</tspan>
+    </text>
+
+    <!-- INNOVATION (Lower Row) -->
+    <text x="95" y="85" font-family="Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="32" font-weight="900" letter-spacing="1.5px" fill="#ffffff">
+      INNOVATION
+    </text>
+  </g>
+</svg>

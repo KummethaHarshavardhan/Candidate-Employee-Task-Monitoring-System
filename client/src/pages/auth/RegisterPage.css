@@ -1,0 +1,79 @@
+/* Scoped Styles for Register Page */
+.register-page-wrapper {
+  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(ellipse at top, rgba(79, 70, 229, 0.12), transparent 70%);
+  padding: 1.5rem 1rem;
+  box-sizing: border-box;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 540px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem 2rem;
+  box-shadow: var(--shadow-xl);
+  margin: auto;
+  box-sizing: border-box;
+}
+
+/* All inputs on the Register page have white background and dark text */
+.register-card .form-control,
+.register-form .form-control {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.register-card .form-control::placeholder,
+.register-form .form-control::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+.register-card .form-control:focus,
+.register-form .form-control:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+.register-card .input-icon {
+  color: #6b7280 !important;
+}
+
+.register-card .form-group {
+  margin-bottom: 0.65rem;
+}
+
+.register-card .grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .register-page-wrapper {
+    padding: 1rem 0.75rem;
+    align-items: flex-start;
+  }
+
+  .register-card {
+    padding: 1.25rem 1.25rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .register-card .grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
