@@ -1,0 +1,42 @@
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.15rem; }
+.form-label { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
+.form-label .required { color: var(--danger); margin-left: 2px; }
+.form-control { width: 100%; padding: 0.625rem 0.875rem; font-size: 0.9rem; font-family: var(--font-sans); background-color: var(--bg-secondary); border: 1px solid var(--border-default); border-radius: var(--radius-md); color: var(--text-primary); outline: none; transition: border-color var(--transition-fast), box-shadow var(--transition-fast); }
+.form-control:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+.form-control::placeholder { color: var(--text-muted); }
+.form-control:disabled { background-color: rgba(17, 24, 39, 0.4); color: var(--text-muted); cursor: not-allowed; }
+.form-error { font-size: 0.75rem; color: var(--danger); margin-top: 0.2rem; }
+.form-hint { font-size: 0.75rem; color: var(--text-muted); }
+
+/* Password Input Field Specific Styling */
+.form-control.input-password,
+.form-control[type="password"],
+input[type="password"].form-control {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border: 1px solid #d1d5db;
+}
+
+.form-control.input-password::placeholder,
+.form-control[type="password"]::placeholder,
+input[type="password"].form-control::placeholder {
+  color: #6b7280 !important;
+  opacity: 1;
+}
+
+.form-control.input-password:focus,
+.form-control[type="password"]:focus,
+input[type="password"].form-control:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+.form-control.input-password:disabled,
+.form-control[type="password"]:disabled {
+  background-color: #f3f4f6 !important;
+  color: #9ca3af !important;
+  cursor: not-allowed;
+}
+
