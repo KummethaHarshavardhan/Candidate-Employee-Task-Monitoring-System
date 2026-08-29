@@ -4,3 +4,5 @@
 .mobile-overlay { display: none; }
 @media (max-width: 1024px) { .main-content { padding: 1.25rem 1.25rem 2.5rem 1.25rem; } .mobile-overlay.mobile-open { display: block; position: fixed; inset: 0; background-color: rgba(3, 7, 18, 0.6); backdrop-filter: blur(4px); z-index: 35; } }
 @media (max-width: 640px) { .main-content { padding: 1rem 0.75rem 2rem 0.75rem; } }
+
+
