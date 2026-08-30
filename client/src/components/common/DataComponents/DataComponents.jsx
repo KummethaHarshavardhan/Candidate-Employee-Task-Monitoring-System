@@ -82,24 +82,15 @@ export const Pagination = ({
   if (totalPages <= 1) return null;
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '1rem 0.5rem',
-        fontSize: '0.85rem',
-        color: 'var(--text-secondary)',
-      }}
-    >
-      <div>
+    <div className="table-pagination">
+      <div className="pagination-info">
         {totalItems !== undefined && (
           <span>
             Total: <strong style={{ color: 'var(--text-primary)' }}>{totalItems}</strong> entries
           </span>
         )}
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+      <div className="pagination-actions">
         <Button
           variant="secondary"
           size="sm"
@@ -109,7 +100,7 @@ export const Pagination = ({
         >
           Previous
         </Button>
-        <span style={{ padding: '0 0.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+        <span className="pagination-pages">
           Page {currentPage} of {totalPages}
         </span>
         <Button

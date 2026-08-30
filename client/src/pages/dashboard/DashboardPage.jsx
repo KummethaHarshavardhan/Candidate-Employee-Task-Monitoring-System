@@ -143,7 +143,7 @@ export const DashboardPage = () => {
           background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.18) 0%, rgba(139, 92, 246, 0.08) 100%)',
           border: '1px solid var(--primary-border)',
           borderRadius: 'var(--radius-lg)',
-          padding: '1.5rem 1.75rem',
+          padding: 'clamp(1rem, 2.5vw, 1.5rem 1.75rem)',
           display: 'flex',
           flexWrap: 'wrap',
           alignItems: 'center',
@@ -151,15 +151,15 @@ export const DashboardPage = () => {
           gap: '1rem',
         }}
       >
-        <div>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '0.25rem' }}>
+        <div style={{ flex: '1 1 260px' }}>
+          <h2 style={{ fontSize: 'clamp(1.15rem, 3vw, 1.4rem)', fontWeight: 800, marginBottom: '0.25rem' }}>
             Welcome back, {user?.name || 'User'} 👋
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
             Candidate & Employee Task Monitoring, Workflow Progress, and Review Platform.
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap', alignItems: 'center' }}>
           {role !== 'CANDIDATE' && (
             <Link to="/tasks/create">
               <Button variant="primary" icon={CheckSquare}>

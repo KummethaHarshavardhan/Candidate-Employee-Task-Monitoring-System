@@ -231,8 +231,8 @@ export const ReviewQueuePage = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+      <div className="page-header-responsive">
         <div>
           <h2>Reviewer Queue</h2>
           <p>Pending candidate submissions awaiting code review, approval, or rework requests</p>
@@ -254,7 +254,7 @@ export const ReviewQueuePage = () => {
             className="form-select"
             value={selectedPriority}
             onChange={(e) => setSelectedPriority(e.target.value)}
-            style={{ width: 'auto', minWidth: '140px' }}
+            style={{ width: 'auto', minWidth: '130px' }}
           >
             <option value="">All Priorities</option>
             <option value="LOW">LOW</option>

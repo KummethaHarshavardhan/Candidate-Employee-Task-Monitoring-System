@@ -136,14 +136,14 @@ export const ProgressDashboardPage = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+      <div className="page-header-responsive">
         <div>
           <h2>Progress Monitoring Dashboard</h2>
           <p>Real-time tracking of candidate workflow states, velocity, and deadline compliance</p>
         </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <Link to="/progress/teams">
             <Button variant="secondary" icon={Users}>
               Team Progress Breakdown

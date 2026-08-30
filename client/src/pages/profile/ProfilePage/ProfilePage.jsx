@@ -69,8 +69,8 @@ export const ProfilePage = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: '1rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(140px, 40vw, 220px), 1fr))',
+            gap: '0.75rem',
             paddingTop: '1.25rem',
             borderTop: '1px solid var(--border-subtle)',
           }}

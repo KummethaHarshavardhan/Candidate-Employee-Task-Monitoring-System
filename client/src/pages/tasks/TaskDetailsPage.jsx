@@ -205,15 +205,15 @@ export const TaskDetailsPage = () => {
   const currentStepIdx = getStepIndex(assignment.status);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
       {/* Top Bar Navigation */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div className="page-header-responsive">
         <Link to="/tasks">
           <Button variant="secondary" size="sm" icon={ArrowLeft}>
             Back to Tasks
           </Button>
         </Link>
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
           <PriorityBadge priority={assignment.task?.priority} />
           <StatusBadge status={assignment.status} isOverdue={assignment.isOverdue} />
         </div>
@@ -267,10 +267,10 @@ export const TaskDetailsPage = () => {
         {/* Left Column: Task Specification */}
         <Card style={{ gridColumn: 'span 2' }}>
           <div style={{ marginBottom: '1.25rem' }}>
-            <h1 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '0.5rem' }}>
+            <h1 style={{ fontSize: 'clamp(1.15rem, 3vw, 1.4rem)', fontWeight: 800, marginBottom: '0.5rem' }}>
               {assignment.task?.title}
             </h1>
-            <div style={{ display: 'flex', gap: '1rem', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+            <div style={{ display: 'flex', gap: '1rem', color: 'var(--text-muted)', fontSize: '0.8rem', flexWrap: 'wrap' }}>
               <span>Version: {assignment.assignmentVersion || 1}</span>
               <span>Assigned By: {assignment.assignedBy?.name || 'Admin'}</span>
               <span>
@@ -393,19 +393,20 @@ export const TaskDetailsPage = () => {
                   This task has been submitted and is currently in your review queue.
                 </p>
               </div>
-              <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
                 <Button
                   variant="warning"
                   onClick={() => setIsReworkModalOpen(true)}
                 >
+                  <AlertTriangle size={16} />
                   Request Rework
                 </Button>
                 <Button
                   variant="success"
-                  icon={CheckCircle}
                   onClick={() => setIsApproveModalOpen(true)}
                 >
-                  Approve Submission
+                  <CheckCircle size={16} />
+                  Approve Task
                 </Button>
               </div>
             </div>

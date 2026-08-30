@@ -8,6 +8,9 @@ import { AppLayout } from './components/layout/AppLayout/AppLayout';
 // Pages
 import { LoginPage } from './pages/auth/LoginPage';
 import { RegisterPage } from './pages/auth/RegisterPage';
+import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
+import { VerifyOTPPage } from './pages/auth/VerifyOTPPage';
+import { ResetPasswordPage } from './pages/auth/ResetPasswordPage';
 import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { CandidateListPage } from './pages/candidates/CandidateListPage';
 import { CandidateDetailsPage } from './pages/candidates/CandidateDetailsPage';
@@ -33,6 +36,9 @@ export const App = () => {
           {/* Public Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/verify-otp" element={<VerifyOTPPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           {/* Protected Application Layout */}
           <Route

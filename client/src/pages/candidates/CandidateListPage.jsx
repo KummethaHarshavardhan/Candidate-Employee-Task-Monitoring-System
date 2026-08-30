@@ -353,17 +353,9 @@ export const CandidateListPage = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
       {/* Page Title & Actions */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-        }}
-      >
+      <div className="page-header-responsive">
         <div>
           <h2>Candidate & Employee Directory</h2>
           <p>Manage candidate profiles, view department assignments, and allocate tasks</p>
@@ -387,7 +379,7 @@ export const CandidateListPage = () => {
             className="form-select"
             value={selectedTeam}
             onChange={(e) => setSelectedTeam(e.target.value)}
-            style={{ width: 'auto', minWidth: '150px' }}
+            style={{ width: 'auto', minWidth: '130px' }}
           >
             <option value="">All Teams</option>
             {filterMeta.teams.map((t) => (
@@ -400,7 +392,7 @@ export const CandidateListPage = () => {
             className="form-select"
             value={selectedDept}
             onChange={(e) => setSelectedDept(e.target.value)}
-            style={{ width: 'auto', minWidth: '160px' }}
+            style={{ width: 'auto', minWidth: '140px' }}
           >
             <option value="">All Departments</option>
             {filterMeta.departments.map((d) => (

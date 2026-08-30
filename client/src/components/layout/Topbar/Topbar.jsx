@@ -35,6 +35,24 @@ export const Topbar = ({ onToggleMobileSidebar }) => {
     }
   };
 
+  const notificationRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+        setShowNotifications(false);
+      }
+    };
+    if (showNotifications) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [showNotifications]);
+
   const getRoleBadgeStyle = (role) => {
     switch (role) {
       case 'ADMIN':
@@ -54,92 +72,97 @@ export const Topbar = ({ onToggleMobileSidebar }) => {
       <div className="topbar-left">
         <button
           onClick={onToggleMobileSidebar}
-          style={{
-            background: 'transparent',
-            border: 'none',
-            color: 'var(--text-secondary)',
-            cursor: 'pointer',
-            padding: '4px',
-            display: 'flex',
-          }}
           className="mobile-menu-toggle"
           aria-label="Toggle sidebar menu"
         >
           <Menu size={22} />
         </button>
-        <Breadcrumbs />
+        <div className="topbar-breadcrumbs-wrapper">
+          <Breadcrumbs />
+        </div>
       </div>
 
-      <div className="topbar-right" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-        <div style={{ position: 'relative' }}>
+      <div className="topbar-right">
+        {/* Notifications Dropdown */}
+        <div className="notifications-wrapper" ref={notificationRef}>
           <button
             type="button"
             onClick={() => setShowNotifications((current) => !current)}
-            style={{ position: 'relative', display: 'flex', padding: '0.4rem', background: 'transparent', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)', color: 'var(--text-muted)', cursor: 'pointer' }}
+            className="topbar-icon-btn"
             title="Notifications"
             aria-label="Notifications"
+            aria-expanded={showNotifications}
           >
             <Bell size={16} />
-            {unreadCount > 0 && <span style={{ position: 'absolute', top: '-6px', right: '-6px', minWidth: '17px', height: '17px', padding: '0 3px', borderRadius: 'var(--radius-full)', background: 'var(--danger)', color: '#fff', fontSize: '0.65rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{unreadCount}</span>}
+            {unreadCount > 0 && (
+              <span className="topbar-badge-count">{unreadCount}</span>
+            )}
           </button>
-          {showNotifications && <div style={{ position: 'absolute', right: 0, top: 'calc(100% + 0.5rem)', width: '320px', maxWidth: 'calc(100vw - 2rem)', maxHeight: '360px', overflowY: 'auto', padding: '0.5rem', background: 'var(--bg-surface)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)', zIndex: 50 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem', borderBottom: '1px solid var(--border-subtle)' }}>
-              <strong>Notifications</strong>
-              {unreadCount > 0 && <button type="button" onClick={async () => { await notificationService.markAllRead(); fetchNotifications(); }} style={{ border: 0, background: 'transparent', color: 'var(--primary)', cursor: 'pointer', fontSize: '0.75rem' }}>Mark all read</button>}
-            </div>
-            {notifications.length === 0 ? <p style={{ padding: '1rem 0.5rem', fontSize: '0.8rem' }}>No notifications</p> : notifications.map((notification) => <button key={notification._id} type="button" onClick={() => handleNotificationClick(notification)} style={{ width: '100%', textAlign: 'left', padding: '0.65rem 0.5rem', background: notification.read ? 'transparent' : 'var(--primary-light)', border: 0, borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-primary)', cursor: 'pointer' }}><strong style={{ display: 'block', fontSize: '0.8rem' }}>{notification.title}</strong><span style={{ display: 'block', marginTop: '0.2rem', whiteSpace: 'pre-line', color: 'var(--text-secondary)', fontSize: '0.75rem' }}>{notification.message}</span></button>)}
-          </div>}
+
+          {showNotifications && (
+            <>
+              <div
+                className="notifications-backdrop"
+                onClick={() => setShowNotifications(false)}
+              />
+              <div className="notifications-popover">
+                <div className="notifications-header">
+                  <strong>Notifications</strong>
+                  {unreadCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={async () => { await notificationService.markAllRead(); fetchNotifications(); }}
+                      className="notifications-mark-read-btn"
+                    >
+                      Mark all read
+                    </button>
+                  )}
+                </div>
+                <div className="notifications-list">
+                  {notifications.length === 0 ? (
+                    <p className="notifications-empty">
+                      No notifications
+                    </p>
+                  ) : (
+                    notifications.map((notification) => (
+                      <button
+                        key={notification._id}
+                        type="button"
+                        onClick={() => handleNotificationClick(notification)}
+                        className={`notification-item ${notification.read ? 'read' : 'unread'}`}
+                      >
+                        <strong className="notification-title">{notification.title}</strong>
+                        <span className="notification-message">
+                          {notification.message}
+                        </span>
+                      </button>
+                    ))
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </div>
+
         {/* User Info */}
         <Link
           to="/profile"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.6rem',
-            padding: '0.35rem 0.65rem',
-            borderRadius: 'var(--radius-md)',
-            backgroundColor: 'var(--bg-surface)',
-            border: '1px solid var(--border-default)',
-            color: 'var(--text-primary)',
-            textDecoration: 'none',
-            fontSize: '0.825rem',
-          }}
+          className="topbar-profile-link"
+          title={`Profile: ${user?.name}`}
         >
-          <div
-            style={{
-              width: '24px',
-              height: '24px',
-              borderRadius: 'var(--radius-full)',
-              background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
-              color: '#fff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '0.75rem',
-              fontWeight: 700,
-            }}
-          >
+          <div className="topbar-avatar">
             {user?.name?.charAt(0) || 'U'}
           </div>
-          <span style={{ fontWeight: 600 }}>{user?.name || 'User'}</span>
+          <span className="topbar-user-name">{user?.name || 'User'}</span>
         </Link>
 
         {/* Role Badge */}
         <div
           className={`topbar-role-badge ${user?.role === 'ADMIN' ? 'topbar-admin-badge' : ''}`}
           style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.35rem',
-            padding: '0.35rem 0.75rem',
-            borderRadius: 'var(--radius-full)',
             backgroundColor: badgeStyle.bg,
             color: badgeStyle.color,
             border: `1px solid ${badgeStyle.border}`,
-            fontSize: '0.75rem',
-            fontWeight: 700,
-            letterSpacing: '0.04em',
           }}
         >
           <RoleIcon size={13} />
@@ -149,18 +172,7 @@ export const Topbar = ({ onToggleMobileSidebar }) => {
         {/* Sign Out Button */}
         <button
           onClick={logout}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'transparent',
-            border: '1px solid var(--border-default)',
-            borderRadius: 'var(--radius-md)',
-            color: 'var(--text-muted)',
-            padding: '0.4rem',
-            cursor: 'pointer',
-            transition: 'all var(--transition-fast)',
-          }}
+          className="topbar-icon-btn topbar-logout-btn"
           title="Sign Out"
           aria-label="Sign Out"
         >

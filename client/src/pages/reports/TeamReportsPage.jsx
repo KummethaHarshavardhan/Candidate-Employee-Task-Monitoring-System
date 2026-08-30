@@ -133,13 +133,13 @@ export const TeamReportsPage = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+      <div className="page-header-responsive">
         <div>
           <h2>Team Performance Evaluation</h2>
           <p>Comparative team performance benchmarks, average completion velocities, and overdue metrics</p>
         </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <Link to="/reports">
             <Button variant="secondary" size="sm" icon={ArrowLeft}>
               Back to Overview

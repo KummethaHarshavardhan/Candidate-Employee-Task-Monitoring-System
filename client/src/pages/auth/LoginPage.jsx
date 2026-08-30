@@ -45,12 +45,14 @@ export const LoginPage = () => {
     <div
       style={{
         minHeight: '100vh',
+        width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'var(--bg-primary)',
-        padding: '1.5rem',
+        padding: 'clamp(0.75rem, 3vw, 1.5rem)',
         backgroundImage: 'radial-gradient(ellipse at top, rgba(79, 70, 229, 0.12), transparent 70%)',
+        boxSizing: 'border-box',
       }}
     >
       <div
@@ -60,8 +62,9 @@ export const LoginPage = () => {
           backgroundColor: 'var(--bg-surface)',
           border: '1px solid var(--border-default)',
           borderRadius: 'var(--radius-xl)',
-          padding: '2.5rem',
+          padding: 'clamp(1.25rem, 4vw, 2.5rem)',
           boxShadow: 'var(--shadow-xl)',
+          boxSizing: 'border-box',
         }}
       >
         {/* Brand Header */}
@@ -126,12 +129,26 @@ export const LoginPage = () => {
             autoComplete="current-password"
           />
 
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-0.25rem', marginBottom: '1.25rem' }}>
+            <Link
+              to="/forgot-password"
+              style={{
+                color: '#818cf8',
+                fontSize: '0.825rem',
+                fontWeight: 500,
+                textDecoration: 'none',
+              }}
+            >
+              Forgot Password?
+            </Link>
+          </div>
+
           <Button
             type="submit"
             variant="primary"
             loading={loading}
             className="w-full"
-            style={{ marginTop: '0.5rem', padding: '0.75rem' }}
+            style={{ marginTop: '0.25rem', padding: '0.75rem' }}
           >
             <span>Sign In to System</span>
             <ArrowRight size={16} />

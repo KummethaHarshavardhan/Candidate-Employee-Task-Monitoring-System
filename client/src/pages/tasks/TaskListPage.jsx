@@ -274,17 +274,9 @@ export const TaskListPage = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
       {/* Header */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-        }}
-      >
+      <div className="page-header-responsive">
         <div>
           <h2>{isCandidate ? 'My Assigned Tasks' : 'Task Allocation & Management'}</h2>
           <p>Track centralized tasks, candidate allocations, priorities, and deadlines</p>
@@ -310,7 +302,7 @@ export const TaskListPage = () => {
             className="form-select"
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            style={{ width: 'auto', minWidth: '150px' }}
+            style={{ width: 'auto', minWidth: '130px' }}
           >
             <option value="">All Statuses</option>
             <option value="PENDING">PENDING</option>
@@ -324,7 +316,7 @@ export const TaskListPage = () => {
             className="form-select"
             value={selectedPriority}
             onChange={(e) => setSelectedPriority(e.target.value)}
-            style={{ width: 'auto', minWidth: '140px' }}
+            style={{ width: 'auto', minWidth: '130px' }}
           >
             <option value="">All Priorities</option>
             <option value="LOW">LOW</option>
@@ -337,7 +329,7 @@ export const TaskListPage = () => {
             className="form-select"
             value={isOverdueOnly}
             onChange={(e) => setIsOverdueOnly(e.target.value)}
-            style={{ width: 'auto', minWidth: '150px' }}
+            style={{ width: 'auto', minWidth: '140px' }}
           >
             <option value="">All Deadlines</option>
             <option value="true">Overdue Tasks Only</option>

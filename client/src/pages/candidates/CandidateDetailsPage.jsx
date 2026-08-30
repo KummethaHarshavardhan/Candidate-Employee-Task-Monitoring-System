@@ -194,9 +194,9 @@ export const CandidateDetailsPage = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
       {/* Top Header Navigation */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div className="page-header-responsive">
         <Link to="/candidates">
           <Button variant="secondary" size="sm" icon={ArrowLeft}>
             Back to Candidates
@@ -211,7 +211,7 @@ export const CandidateDetailsPage = () => {
 
       {/* Candidate Profile Info Card */}
       <div className="grid grid-3 gap-6">
-        <Card style={{ gridColumn: 'span 2' }}>
+        <Card className="candidate-main-card" style={{ gridColumn: 'span 2' }}>
           <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
             <div
               style={{
@@ -368,7 +368,7 @@ export const CandidateDetailsPage = () => {
         title={`Assigned Tasks (${assignments.length})`}
         subtitle="Complete record of tasks assigned to this candidate"
         actions={
-          <div style={{ display: 'flex', gap: '0.35rem' }}>
+          <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
             {['ALL', 'ACTIVE', 'COMPLETED', 'OVERDUE'].map((tab) => (
               <button
                 key={tab}

@@ -135,8 +135,8 @@ export const SubmissionListPage = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+      <div className="page-header-responsive">
         <div>
           <h2>Work Submissions</h2>
           <p>Complete audit history of candidate task submissions, versions, and attachments</p>

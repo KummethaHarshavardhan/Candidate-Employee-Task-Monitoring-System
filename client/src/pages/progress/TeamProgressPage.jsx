@@ -32,8 +32,8 @@ export const TeamProgressPage = () => {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+      <div className="page-header-responsive">
         <div>
           <h2>Team-Wise Progress & Velocity</h2>
           <p>Comparative team workloads, completion efficiency, and task health</p>
@@ -53,7 +53,7 @@ export const TeamProgressPage = () => {
         <div className="grid grid-2 gap-6">
           {teams.map((t) => (
             <Card key={t.team}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                 <div>
                   <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{t.team}</h3>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -75,7 +75,7 @@ export const TeamProgressPage = () => {
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(4, 1fr)',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(65px, 1fr))',
                     gap: '0.5rem',
                     paddingTop: '0.75rem',
                     borderTop: '1px solid var(--border-subtle)',

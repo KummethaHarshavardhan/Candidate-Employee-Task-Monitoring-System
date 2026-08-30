@@ -124,8 +124,8 @@ export const CandidateProgressPage = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+      <div className="page-header-responsive">
         <div>
           <h2>Candidate Progress Tracking</h2>
           <p>Individual candidate task metrics, velocity, and completion records</p>

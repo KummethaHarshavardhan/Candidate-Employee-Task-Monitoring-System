@@ -87,8 +87,8 @@ export const CreateTaskPage = () => {
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+      <div className="page-header-responsive">
         <div>
           <h2>Create & Allocate Task</h2>
           <p>Create a centralized task and assign it to a candidate with priority & deadline</p>
@@ -196,6 +196,7 @@ export const CreateTaskPage = () => {
               alignItems: 'center',
               justifyContent: 'flex-end',
               gap: '0.75rem',
+              flexWrap: 'wrap',
               marginTop: '1.5rem',
               paddingTop: '1.25rem',
               borderTop: '1px solid var(--border-subtle)',

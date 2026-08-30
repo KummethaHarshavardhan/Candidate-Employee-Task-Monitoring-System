@@ -46,6 +46,32 @@ const userSchema = new mongoose.Schema(
       ref: 'Candidate',
       default: null,
     },
+    // OTP-based Password Reset Fields
+    passwordResetOtpHash: {
+      type: String,
+      select: false,
+    },
+    passwordResetOtpExpires: {
+      type: Date,
+      select: false,
+    },
+    passwordResetOtpAttempts: {
+      type: Number,
+      default: 0,
+      select: false,
+    },
+    passwordResetOtpLastSent: {
+      type: Date,
+      select: false,
+    },
+    passwordResetAuthTokenHash: {
+      type: String,
+      select: false,
+    },
+    passwordResetAuthExpires: {
+      type: Date,
+      select: false,
+    },
   },
   {
     timestamps: true,
